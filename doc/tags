@@ -1,0 +1,11 @@
+g:tanjun_color	tanjun.txt	/*g:tanjun_color*
+g:tanjun_def_highlights	tanjun.txt	/*g:tanjun_def_highlights*
+g:tanjun_enable	tanjun.txt	/*g:tanjun_enable*
+hl-WinActive	tanjun.txt	/*hl-WinActive*
+hl-WinActiveGit	tanjun.txt	/*hl-WinActiveGit*
+hl-WinActiveTxt	tanjun.txt	/*hl-WinActiveTxt*
+hl-WinInactive	tanjun.txt	/*hl-WinInactive*
+tanjun	tanjun.txt	/*tanjun*
+tanjun-highlights	tanjun.txt	/*tanjun-highlights*
+tanjun-vars	tanjun.txt	/*tanjun-vars*
+tanjun.txt	tanjun.txt	/*tanjun.txt*

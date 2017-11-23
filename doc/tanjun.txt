@@ -1,0 +1,77 @@
+*tanjun.txt*    Simple statusline neovim plugin.    *tanjun*
+
+Author: Yukio
+
+==============================================================================
+1. Useful Variables                                 *tanjun-vars*
+
+                                                    *g:tanjun_enable* 
+g:tanjun_enable
+                Type: Int [0 or 1]
+                Default: 1
+
+                Indicates whether to enable tanjun from start
+                or not.
+
+                                                    *g:tanjun_color* 
+g:tanjun_color
+                Type: Dict
+                Default: {
+                    "active"    : [ 255, 2 ],
+                    "active_txt": [ 255, 232 ],
+                    "active_git": [ 1, 255 ],
+                    "inactive"  : [ 240, 232 ],
+                }
+
+                Defines the colors used in the statusline.
+                Each key should be mapped to an array of length
+                two:
+
+                - the first for the background color;
+                - the second for the foreground color.
+
+                The keys are:
+
+                - active    : |hl-WinActive|;
+                - active_txt: |hl-WinActiveTxt|;
+                - active_git: |hl-WinActiveGit|;
+                - inactive  : |hl-WinInactive|.
+
+                                                    *g:tanjun_def_highlights* 
+g:tanjun_def_highlights
+                Type: Int [0 or 1]
+                Default: 1
+
+                Whether tanjun should define the highlights.
+                If disabled, you should define all of them.
+
+==============================================================================
+2. Highlights                                       *tanjun-highlights*
+
+WinActive                                           *hl-WinActive*
+                Edges of the statusline in the active window.
+
+                Keep in mind that the foreground color
+                is the one that will be used on the blocks on
+                the edge.
+
+                The background represents the color after the
+                colored edge.
+
+WinActiveTxt                                        *hl-WinActiveTxt*
+                Text inside the statusline in the active window.
+
+                All the things written inside the statusline such
+                as filename, lines, percentage, etc.
+
+WinActiveGit                                        *hl-WinActiveGit*
+                Git branch name in the active window.
+
+WinInactive                                         *hl-WinInactive*
+                All the things in the inactive window.
+
+                Foreground colors corresponds to the edges and text
+                color. Background colors corresponds to the rest.
+
+==============================================================================
+vim:tw=78:sw=4:ft=help:norl:
