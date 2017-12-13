@@ -37,7 +37,7 @@ function! s:get_git_branch()
     return l:git
 endfunction
 
-function! TanjunWinEnter()
+function! BuildWinEnterString()
     let l:mod = s:check_not_modified()
     let l:git = s:get_git_branch()
 
@@ -51,11 +51,21 @@ function! TanjunWinEnter()
     return s:build_default_str('WinActive', l:left, l:right)
 endfunction
 
-function! TanjunWinLeave()
+function! BuildWinLeaveString()
     let l:mod = s:check_not_modified()
     let l:left = l:mod . '%t ' . l:mod
     let l:right = strftime("%c")
     return s:build_default_str('WinInactive', l:left, l:right)
+endfunction
+
+function! TanjunWinEnter()
+    setlocal statusline=%!BuildWinEnterString()
+    setlocal cursorline
+endfunction
+
+function! TanjunWinLeave()
+    setlocal statusline=%!BuildWinLeaveString()
+    setlocal nocursorline
 endfunction
 
 function! tanjun#enable()
@@ -68,10 +78,8 @@ function! tanjun#enable()
                 \'inactive': [ 240, 232 ]
                 \}
 
-    autocmd WinEnter * setlocal statusline=%!TanjunWinEnter()
-    autocmd WinLeave * setlocal statusline=%!TanjunWinLeave()
-    autocmd WinEnter * setlocal cursorline
-    autocmd WinLeave * setlocal nocursorline
+    autocmd WinEnter * call TanjunWinEnter()
+    autocmd WinLeave * call TanjunWinLeave()
 
     let g:tanjun_def_highlights = get(g:, 'tanjun_def_highlights', 1)
     if g:tanjun_def_highlights
@@ -85,7 +93,7 @@ function! tanjun#enable()
                     \ . ' ctermfg=' . g:tanjun_color['inactive'][1])
     endif
 
-    set statusline=%!TanjunWinEnter()
+    call TanjunWinEnter()
 endfunction
 
 " if tanjun is set to be enabled, enable it
