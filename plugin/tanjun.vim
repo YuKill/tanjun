@@ -1,11 +1,11 @@
-if exists('g:loaded_tanjun')
-    finish
-endif
-
 " load tanjun
 let g:loaded_tanjun = 1
 " default value is enabled
 let g:tanjun_enable = get(g:, 'tanjun_enable', 1)
+" default value is enabled
+let g:tanjun_switch_number = get(g:, 'tanjun_switch_number', 1)
+" default value is enabled
+let g:tanjun_switch_relative_number = get(g:, 'tanjun_switch_relative_number', 1)
 " command for getting branch name
 let s:git_branch_command = 'git rev-parse --abbrev-ref HEAD 2> /dev/null'
 
@@ -37,6 +37,26 @@ function! s:get_git_branch()
     return l:git
 endfunction
 
+function! s:set_all(val)
+    if g:tanjun_switch_number
+        if a:val
+            set number
+        else
+            set nonumber
+        endif
+    endif
+
+    if g:tanjun_switch_relative_number
+        if a:val
+            set relativenumber
+        else
+            set norelativenumber
+        endif
+    endif
+
+    redraw
+endfunction
+
 function! BuildWinEnterString()
     let l:mod = s:check_not_modified()
     let l:git = s:get_git_branch()
@@ -59,11 +79,13 @@ function! BuildWinLeaveString()
 endfunction
 
 function! TanjunWinEnter()
+    call s:set_all(1)
     setlocal statusline=%!BuildWinEnterString()
     setlocal cursorline
 endfunction
 
 function! TanjunWinLeave()
+    call s:set_all(0)
     setlocal statusline=%!BuildWinLeaveString()
     setlocal nocursorline
 endfunction
@@ -79,7 +101,9 @@ function! tanjun#enable()
                 \}
 
     autocmd WinEnter * call TanjunWinEnter()
+    autocmd BufWinEnter * call TanjunWinEnter()
     autocmd WinLeave * call TanjunWinLeave()
+    autocmd BufWinLeave * call TanjunWinLeave()
 
     let g:tanjun_def_highlights = get(g:, 'tanjun_def_highlights', 1)
     if g:tanjun_def_highlights
